@@ -102,23 +102,32 @@ class SortingRobot:
 
         self.swap_item()  # picks the first one
 
+        self.set_light_on()
+        while self.light_is_on():
+            self.set_light_off()
+            while self.can_move_right():
+                self.move_right()
+                # is the item I'm currently bigger smaller than the one I'm 👀?
+                if self.compare_item() == 1:  # yes, grab the biggest one
+                    self.set_light_on()
+                    self.swap_item()
+
+            while self.can_move_left():
+                self.move_left()
+                # move left until I find empty spot
+                if(self.compare_item() == None):
+                    self.set_light_on()
+                    # drop biggest one I found
+                    self.swap_item()
+                    # move right and grab a new one
+                    self.move_right()
+                    self.swap_item()
+                    break
+
         while self.can_move_right():
-
-            print(self._item)
-
-            # is the item I'm currently holding bigger than the one I'm 👀?
-            if self.compare_item() == 1:  # yes
-                pass
-            elif self.compare_item() == -1:  # no
-                self.swap_item()
-
             self.move_right()
 
-            if self.can_move_right() == False:
-                self.swap_item()
-
-        while self.can_move_left():
-            self.move_left()
+        self.swap_item()
 
         # if self._item != None:
         #     self.sort()
@@ -127,6 +136,13 @@ class SortingRobot:
         # self.swap_item()
 
         pass
+
+
+# pick first
+# find smallest
+# swap them
+# put the smalles where none is
+# because it will be the 1st then 2nd, etc...
 
 
 if __name__ == "__main__":
